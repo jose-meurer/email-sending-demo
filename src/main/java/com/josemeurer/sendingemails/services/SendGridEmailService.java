@@ -2,6 +2,7 @@ package com.josemeurer.sendingemails.services;
 
 import com.josemeurer.sendingemails.dto.EmailDTO;
 import com.josemeurer.sendingemails.services.exceptions.EmailException;
+import com.josemeurer.sendingemails.services.interfaces.EmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -12,14 +13,12 @@ import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service
-public class EmailService {
+public class SendGridEmailService implements EmailService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EmailService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SendGridEmailService.class);
 
     @Autowired
     private SendGrid sendGrid;
