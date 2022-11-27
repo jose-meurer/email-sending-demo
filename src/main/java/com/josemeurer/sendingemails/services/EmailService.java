@@ -1,6 +1,7 @@
 package com.josemeurer.sendingemails.services;
 
 import com.josemeurer.sendingemails.dto.EmailDTO;
+import com.josemeurer.sendingemails.services.exceptions.EmailException;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -38,13 +39,13 @@ public class EmailService {
             Response response = sendGrid.api(request);
             if (response.getStatusCode() >= 400 && response.getStatusCode() <= 500) {
                 LOG.error("Error sending email: " + response.getBody());
+                throw new EmailException(response.getBody());
             }
-            else {
-                LOG.info("Email sent! Status = " + response.getStatusCode());
-            }
+
+            LOG.info("Email sent! Status = " + response.getStatusCode());
         }
         catch (IOException e) {
-            e.printStackTrace();
+            throw new EmailException((e.getMessage()));
         }
     }
 }
